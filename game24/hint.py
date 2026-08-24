@@ -34,13 +34,3 @@ class HintModel:
         if not self.is_full():
             return []
         return solve(self.numbers())
-
-
-def hint_message(model):
-    """返回「提示」按钮应显示的文本，区分未填满 / 无解 / 有解。"""
-    if not model.is_full():
-        return "请先选择 4 个数字。"
-    sols = model.solve()
-    if not sols:
-        return "这组数字无解。"
-    return "解法：\n" + "\n".join(f"{s} = 24" for s in sols)

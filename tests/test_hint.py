@@ -1,4 +1,5 @@
-from game24.hint import HintModel, hint_message
+from game24.hint import HintModel
+from game24.ui.hint_window import hint_message
 
 
 def test_pick_fills_first_empty_in_order():
