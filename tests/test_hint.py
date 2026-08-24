@@ -74,3 +74,21 @@ def test_hint_message_when_solvable():
     msg = hint_message(m)
     assert "解法" in msg
     assert "3 * 8 * (9 - 8) = 24" in msg
+
+
+def test_clear_all_clears_every_slot():
+    m = HintModel()
+    for v in (3, 4, 10, 11):
+        m.pick(v)
+    assert m.is_full() is True
+    m.clear_all()
+    assert m.selected == [None, None, None, None]
+    assert m.is_full() is False
+
+
+def test_clear_all_on_partial_selection():
+    m = HintModel()
+    m.pick(3)
+    m.pick(8)
+    m.clear_all()
+    assert m.selected == [None, None, None, None]

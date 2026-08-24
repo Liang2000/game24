@@ -19,6 +19,10 @@ class HintModel:
         if 0 <= index < 4:
             self.selected[index] = None
 
+    def clear_all(self):
+        """清空全部 4 个槽位。"""
+        self.selected = [None, None, None, None]
+
     def is_full(self):
         return all(v is not None for v in self.selected)
 

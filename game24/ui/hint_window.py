@@ -42,9 +42,14 @@ class HintWindow(QWidget):
             grid.addWidget(b, i // 7, i % 7)
         layout.addLayout(grid)
 
+        btn_row = QHBoxLayout()
         self.hint_btn = QPushButton("提示")
         self.hint_btn.clicked.connect(self._on_hint)
-        layout.addWidget(self.hint_btn)
+        self.clear_btn = QPushButton("清空")
+        self.clear_btn.clicked.connect(self._on_clear_all)
+        btn_row.addWidget(self.hint_btn)
+        btn_row.addWidget(self.clear_btn)
+        layout.addLayout(btn_row)
 
         self.result_label = QLabel()
         self.result_label.setWordWrap(True)
@@ -56,6 +61,10 @@ class HintWindow(QWidget):
 
     def _on_clear(self, index):
         self.model.clear(index)
+        self._refresh()
+
+    def _on_clear_all(self):
+        self.model.clear_all()
         self._refresh()
 
     def _on_hint(self):
