@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (
 )
 
 from ..cards import face_name
-from ..hint import HintModel
+from ..hint import HintModel, hint_message
 
 CARD_VALUES = list(range(1, 14))  # A,2,...,10,J,Q,K → 1..13
 
@@ -59,11 +59,7 @@ class HintWindow(QWidget):
         self._refresh()
 
     def _on_hint(self):
-        sols = self.model.solve()
-        if not sols:
-            self.result_label.setText("请先选择 4 个数字。")
-            return
-        self.result_label.setText("解法：\n" + "\n".join(f"{s} = 24" for s in sols))
+        self.result_label.setText(hint_message(self.model))
 
     def _refresh(self):
         for i, b in enumerate(self.slot_buttons):

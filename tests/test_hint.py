@@ -1,4 +1,4 @@
-from game24.hint import HintModel
+from game24.hint import HintModel, hint_message
 
 
 def test_pick_fills_first_empty_in_order():
@@ -51,3 +51,26 @@ def test_solve_requires_full():
     m.pick(9)
     sols = m.solve()
     assert "3 * 8 * (9 - 8)" in sols
+
+
+def test_hint_message_when_not_full():
+    m = HintModel()
+    m.pick(3)
+    assert hint_message(m) == "请先选择 4 个数字。"
+
+
+def test_hint_message_when_full_unsolvable():
+    m = HintModel()
+    for v in (3, 4, 10, 11):  # J = 11，无解
+        m.pick(v)
+    assert m.is_full() is True
+    assert hint_message(m) == "这组数字无解。"
+
+
+def test_hint_message_when_solvable():
+    m = HintModel()
+    for v in (3, 8, 8, 9):
+        m.pick(v)
+    msg = hint_message(m)
+    assert "解法" in msg
+    assert "3 * 8 * (9 - 8) = 24" in msg
